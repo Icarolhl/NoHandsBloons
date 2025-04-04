@@ -26,6 +26,7 @@
 - Sistema operacional com suporte a PyAutoGUI
 - Resolução 1920x1080 (pode precisar ajustar coordenadas)
 - Biblioteca OpenCV instalada (para `confidence` funcionar)
+- Ter a fase Inferno desbloqueada
 
 ---
 
