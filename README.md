@@ -63,4 +63,3 @@ O bot fará todo o processo: iniciar partida, posicionar torres, clicar "Próxim
 
 Distribuído sob a licença MIT.  
 Sinta-se livre para usar, modificar, adaptar ou expandir como quiser.
-```
