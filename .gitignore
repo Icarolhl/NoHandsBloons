@@ -1,0 +1,45 @@
+# =====================
+# Python
+# =====================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+*.log
+
+# =====================
+# Virtual Environments
+# =====================
+venv/
+ENV/
+env/
+.venv/
+
+# =====================
+# IDEs & editors
+# =====================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# =====================
+# System files
+# =====================
+.DS_Store
+Thumbs.db
+
+# =====================
+# Git artifacts
+# =====================
+.gitattributes
+
+# =====================
+# Sensitive files
+# =====================
+.env
+*.key
+*.pem
