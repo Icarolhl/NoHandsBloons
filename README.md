@@ -5,6 +5,7 @@
 ![Status](https://img.shields.io/badge/status-working-brightgreen)
 
 > Um bot totalmente automatizado para jogar Bloons TD6
+
 ---
 
 ## 🧠 O que é?
@@ -13,7 +14,8 @@
 
 - Seleção automática de mapas e modos  
 - Posicionamento de torres (macacos)  
-- Aplicação de upgrades
+- Aplicação de upgrades  
+- Detecção visual de progresso (via screenshots)  
 - Ciclo infinito de farming  
 
 ---
@@ -30,7 +32,7 @@
 ## 📦 Instalação
 
 ```bash
-git clone https://github.com/Icarolhl/NoHandsBloons
+git clone https://github.com/Icarolhl/NoHandsBloons.git
 cd NoHandsBloons
 pip install -r requirements.txt
 ```
@@ -49,6 +51,22 @@ python main.py
 
 O bot fará todo o processo: iniciar partida, posicionar torres, clicar "Próximo", repetir...
 
+---
+
+## 📂 Estrutura
+
+```
+NoHandsBloons/
+├── main.py               # Código principal do bot
+├── requirements.txt      # Dependências Python
+├── LICENSE               # Licença MIT
+├── README.md             # Este arquivo
+└── recursos/             # Imagens usadas para reconhecimento de tela
+    ├── menu.jpg
+    └── next.jpg
+```
+
+---
 
 ## 🛠️ Tecnologias usadas
 
