@@ -6,18 +6,10 @@ from pathlib import Path
 
 colorama.init(autoreset=True)
 
-# Caminhos
-CAMINHO_RAIZ = Path(__file__).parent
-MENU_IMG_PATH = str(CAMINHO_RAIZ / 'recursos/menu.jpg')
-NEXT_IMG_PATH = str(CAMINHO_RAIZ / 'recursos/next.jpg')
+ROOT_PATH = Path(__file__).parent
+MENU_IMG_PATH = str(ROOT_PATH / 'recursos/menu.jpg')
+NEXT_IMG_PATH = str(ROOT_PATH / 'recursos/next.jpg')
 
-"""
-Dicionário contendo as coordenadas para auto clicker.
-
-Obs: Toda vez que novos mapas e macacos são adicionados, por consequência essas
-coordenadas também são alteradas. Pode ser que na sua versão do jogo esteja
-diferente e você precise mudar.
-"""
 cordenadas = {
     "BOTAO_JOGAR": [963, 981],
     "DIFICULDADE_EXPERT": [1321, 1004],
@@ -41,65 +33,71 @@ cordenadas = {
 }
 
 
-def click(local):
+def click(local, delay=0.9):
     pyautogui.click(cordenadas[local])
-    sleep(0.9)
+    sleep(delay)
+
+
+def scroll_repetido(vezes=20, passo=-800):
+    print(f'{Fore.BLUE}Scrollando a lista de torres...')
+    pyautogui.moveTo(1817, 658)
+    sleep(0.3)
+    for _ in range(vezes):
+        pyautogui.scroll(passo)
+        sleep(0.1)
 
 
 def checa_tela_inicial():
     while True:
         try:
-            pyautogui.locateOnScreen(
+            if pyautogui.locateOnScreen(
                 MENU_IMG_PATH, grayscale=True, confidence=0.9
-            )
-            print(
-                f'{Fore.GREEN}Tela do Jogo encontrada. '
-                'Iniciando o bot...'
-            )
-            return
+            ):
+                print(
+                    f'{Fore.GREEN}Tela do Jogo encontrada. '
+                    'Iniciando o bot...'
+                )
+                return
         except pyautogui.ImageNotFoundException:
-            print(
-                f'{Fore.RED}Imagem menu.jpg não encontrada. '
-                'Tentando novamente...'
-            )
+            pass
+        print(f'{Fore.YELLOW}Tela não detectada, tentando novamente...')
         sleep(2)
 
 
-def scrollar_lista_torres():
-    print(f'{Fore.BLUE}Scrollando a lista de torres...')
-    pyautogui.moveTo(1817, 658)
-    sleep(0.3)
-    for _ in range(20):
-        pyautogui.scroll(-800)
-        sleep(0.1)
+def posicionar_macaco(tipo, pos, upgrades):
+    click(tipo)
+    click(pos)
+    click(pos)
+    for upgrade in upgrades:
+        for _ in range(upgrade["vezes"]):
+            click(upgrade["local"], delay=0.3)
 
 
 def posicionamento_macacos():
     print(f'{Fore.MAGENTA}Posicionando macacos...')
 
-    click("SELECIONA_MACACO_ATIRADOR")
-    click("POSICIONA_MACACO_ATIRADOR")
-    click("SELECIONA_MACACO_ATIRADOR_MAPA")
-    click("UPGRADE_3_ESQUERDA")
-    click("UPGRADE_3_ESQUERDA")
-    click("UPGRADE_3_ESQUERDA")
-    click("UPGRADE_3_ESQUERDA")
-    click("UPGRADE_2_ESQUERDA")
-    click("UPGRADE_2_ESQUERDA")
+    posicionar_macaco(
+        "SELECIONA_MACACO_ATIRADOR",
+        "POSICIONA_MACACO_ATIRADOR",
+        [
+            {"local": "UPGRADE_3_ESQUERDA", "vezes": 4},
+            {"local": "UPGRADE_2_ESQUERDA", "vezes": 2}
+        ]
+    )
 
-    scrollar_lista_torres()
+    scroll_repetido()
 
-    click("SELECIONA_MACACO_MAGO")
-    click("POSICIONA_MACACO_MAGO")
-    click("SELECIONA_MACACO_MAGO_MAPA")
-    click("UPGRADE_1_DIREITA")
-    click("UPGRADE_1_DIREITA")
-    click("UPGRADE_1_DIREITA")
-    click("UPGRADE_1_DIREITA")
-    click("UPGRADE_3_DIREITA")
-    click("UPGRADE_3_DIREITA")
-    click("INICIAR|DEIXAR_RAPIDO")
-    click("INICIAR|DEIXAR_RAPIDO")
+    posicionar_macaco(
+        "SELECIONA_MACACO_MAGO",
+        "POSICIONA_MACACO_MAGO",
+        [
+            {"local": "UPGRADE_1_DIREITA", "vezes": 4},
+            {"local": "UPGRADE_3_DIREITA", "vezes": 2}
+        ]
+    )
+
+    click("INICIAR|DEIXAR_RAPIDO", delay=0.5)
+    click("INICIAR|DEIXAR_RAPIDO", delay=0.5)
     sleep(2)
 
 
@@ -119,19 +117,28 @@ def Main():
 
 
 def Exit():
-    try:
-        botao = pyautogui.locateOnScreen(
-            NEXT_IMG_PATH, grayscale=True, confidence=0.9
-        )
-        while botao is None:
-            sleep(2)
-            print(f'{Fore.YELLOW}Botão Próximo não encontrado.')
+    print(f'{Fore.CYAN}Esperando botão Próximo aparecer...')
+    while True:
+        try:
             botao = pyautogui.locateOnScreen(
                 NEXT_IMG_PATH, grayscale=True, confidence=0.9
             )
-        print(f'{Fore.CYAN}Fase Terminada. Começando Novamente...')
-    except pyautogui.ImageNotFoundException:
-        print(f'{Fore.RED}Imagem next.jpg não encontrada.')
+            if botao:
+                print(
+                    f'{Fore.CYAN}Botão Próximo encontrado. '
+                    'Clicando e voltando '
+                    'ao menu...'
+                )
+                click("BOTAO_PROXIMO")
+                sleep(2)
+                click("BOTAO_HOME")
+                sleep(6)
+                break
+        except pyautogui.ImageNotFoundException:
+            pass
+        print(f'{Fore.YELLOW}Aguardando botão Próximo...')
+        sleep(2)
+
     checa_tela_inicial()
 
 
@@ -141,3 +148,4 @@ if __name__ == '__main__':
 
     while True:
         Main()
+        Exit()
