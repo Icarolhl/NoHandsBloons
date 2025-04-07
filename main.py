@@ -73,7 +73,7 @@ def posicionar_macaco(tipo, pos, upgrades):
             click(upgrade["local"], delay=0.3)
 
 
-def posicionamento_macacos():
+def posicionamentos_macacos():
     print(f'{Fore.MAGENTA}Posicionando macacos...')
 
     posicionar_macaco(
@@ -113,7 +113,7 @@ def Main():
     sleep(7)
     click("BOTAO_OK")
     sleep(3)
-    posicionamento_macacos()
+    posicionamentos_macacos()
 
 
 def Exit():
