@@ -6,7 +6,6 @@
 
 > Um bot totalmente automatizado para jogar Bloons TD6
 
----
 
 ## 🧠 O que é?
 
@@ -18,7 +17,6 @@
 - Detecção visual de progresso (via screenshots)  
 - Ciclo infinito de farming  
 
----
 
 ## ⚙️ Requisitos
 
@@ -28,7 +26,6 @@
 - Biblioteca OpenCV instalada (para `confidence` funcionar)
 - Ter a fase Inferno desbloqueada
 
----
 
 ## 📦 Instalação
 
@@ -38,7 +35,6 @@ cd NoHandsBloons
 pip install -r requirements.txt
 ```
 
----
 
 ## 🚀 Como usar
 
@@ -52,7 +48,6 @@ python main.py
 
 O bot fará todo o processo: iniciar partida, posicionar torres, clicar "Próximo", repetir...
 
----
 
 ## 📂 Estrutura
 
@@ -67,7 +62,6 @@ NoHandsBloons/
     └── next.jpg
 ```
 
----
 
 ## 🛠️ Tecnologias usadas
 
@@ -76,7 +70,6 @@ NoHandsBloons/
 - `pillow`
 - `opencv-python`
 
----
 
 ## 📄 Licença
 
